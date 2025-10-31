@@ -18,59 +18,65 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 text-gray-800">
-      {/* Content */}
-      <section className="max-w-6xl mx-auto px-6 py-10 space-y-12">
-        {/* Carousel */}
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-800 font-inter">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+        <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+          <iframe
+            src="/carousel.html"
+            className="w-full h-[220px] sm:h-[280px] md:h-[350px] lg:h-[420px] border-none"
+            title="Alpine Carousel"
+          ></iframe>
+        </div>
 
-        <iframe
-          src="/carousel.html"
-          className="w-full h-96 border-none"
-          title="Alpine Carousel"
-        ></iframe>
-
-        {/* Conditional View */}
         {view === "list" ? (
-          <section className="bg-white rounded-2xl shadow p-8 border border-gray-100">
-            <div className="flex justify-between items-start">
-              <h2 className="text-2xl font-semibold mb-6">Company List</h2>
+          <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 text-center sm:text-left">
+                Company Directory
+              </h2>
 
               <button
                 onClick={() => setView("form")}
-                className={`px-4 py-2 rounded-lg font-medium transition bg-gray-100 hover:bg-gray-200" `}
+                className="w-full sm:w-auto text-sm md:text-base px-4 py-2 rounded-lg font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 transition"
               >
-                Register Company
+                + Register Company
               </button>
             </div>
 
-            {loading && <p>Loading data...</p>}
-            {error && <p className="text-red-500">{error}</p>}
+            {loading && (
+              <p className="text-gray-500 animate-pulse text-center">
+                Loading data...
+              </p>
+            )}
+            {error && <p className="text-red-500 text-center">{error}</p>}
 
             {!loading && !error && (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm border-collapse">
-                  <thead className="bg-gray-100 border-b border-gray-200 text-gray-700">
+                  <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase text-xs tracking-wide">
                     <tr>
-                      <th className="text-left p-3 font-semibold">Name</th>
-                      <th className="text-left p-3 font-semibold">Industry</th>
-                      <th className="text-left p-3 font-semibold">
-                        Founded Year
-                      </th>
-                      <th className="text-left p-3 font-semibold">
-                        Headquarters City
-                      </th>
+                      <th className="text-left p-3 font-medium">Name</th>
+                      <th className="text-left p-3 font-medium">Industry</th>
+                      <th className="text-left p-3 font-medium">Founded</th>
+                      <th className="text-left p-3 font-medium">City</th>
                     </tr>
                   </thead>
                   <tbody>
                     {companies.map((c, i) => (
                       <tr
                         key={i}
-                        className="hover:bg-blue-50 transition-colors border-b border-gray-100"
+                        className="hover:bg-blue-50/50 transition-colors border-b border-gray-100"
                       >
-                        <td className="p-3">{c.name}</td>
-                        <td className="p-3">{c.industry}</td>
-                        <td className="p-3">{c.foundedYear || "N/A"}</td>
-                        <td className="p-3">{c.headquarters || "N/A"}</td>
+                        <td className="p-3 font-medium text-gray-800">
+                          {c.name}
+                        </td>
+                        <td className="p-3 text-gray-600">{c.industry}</td>
+                        <td className="p-3 text-gray-600">
+                          {c.foundedYear || "N/A"}
+                        </td>
+                        <td className="p-3 text-gray-600">
+                          {c.headquarters || "N/A"}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -79,93 +85,138 @@ export default function Home() {
             )}
           </section>
         ) : (
-          <section className="bg-white rounded-2xl shadow p-8 border border-gray-100">
-            <div className="flex justify-between items-start">
-              <h2 className="text-2xl font-semibold mb-6 ">
+          <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8">
+              <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 text-center sm:text-left">
                 Company Registration
               </h2>
               <button
                 onClick={() => setView("list")}
-                className={`px-4 py-2 rounded-lg font-medium transition bg-gray-100 hover:bg-gray-200" `}
+                className="w-full sm:w-auto text-sm md:text-base px-4 py-2 rounded-lg font-medium bg-gray-100 hover:bg-gray-200 transition"
               >
-                Company List
+                ← Back to List
               </button>
             </div>
 
-            <form className="grid gap-6 sm:grid-cols-2">
-              <div className="col-span-2 sm:col-span-1">
-                <label className="block text-sm font-medium text-gray-600">
+            <form
+              action=""
+              method="post"
+              noValidate
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+            >
+              {/* Company Name */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="companyName"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Company Name
                 </label>
                 <input
                   type="text"
-                  className="w-full mt-1 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-                  placeholder="e.g., OpenAI"
+                  name="name"
+                  id="companyName"
+                  placeholder="Enter company name"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
 
+              {/* Industry Sector */}
               <div>
-                <label className="block text-sm font-medium text-gray-600">
+                <label
+                  htmlFor="industrySector"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Industry Sector
                 </label>
-                <select className="w-full mt-1 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
-                  <option>Technology</option>
-                  <option>Finance</option>
-                  <option>Healthcare</option>
+                <select
+                  name="industrySector"
+                  id="industrySector"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="">Select sector</option>
+                  <option value="technology">Technology</option>
+                  <option value="finance">Finance</option>
+                  <option value="healthcare">Healthcare</option>
                 </select>
               </div>
 
+              {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-gray-600">
-                  Employee Size
-                </label>
-                <div className="flex gap-4 mt-2 text-sm text-gray-700">
-                  <label>
-                    <input type="radio" name="size" className="mr-1" /> 1–50
-                  </label>
-                  <label>
-                    <input type="radio" name="size" className="mr-1" /> 51–200
-                  </label>
-                  <label>
-                    <input type="radio" name="size" className="mr-1" /> 200+
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-600">
-                  Contact Email
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Email
                 </label>
                 <input
                   type="email"
-                  className="w-full mt-1 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                  name="email"
+                  id="email"
                   placeholder="you@example.com"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-600">
+              {/* Employee Size */}
+              <div className="sm:col-span-2">
+                <span className="block text-sm font-medium text-gray-700 mb-2">
+                  Employee Size
+                </span>
+                <div className="flex flex-wrap gap-4">
+                  {["1-50", "51-100", "200+"].map((size) => (
+                    <label
+                      key={size}
+                      className="flex items-center gap-2 text-gray-700 cursor-pointer"
+                    >
+                      <input
+                        type="radio"
+                        name="employeeSize"
+                        value={size}
+                        className="text-blue-600 focus:ring-blue-500"
+                      />
+                      {size}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Headquarters City */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="headquartersCity"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Headquarters City
                 </label>
                 <input
                   type="text"
-                  className="w-full mt-1 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-                  placeholder="Jakarta"
+                  name="headquartersCity"
+                  id="headquartersCity"
+                  placeholder="Enter city"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
-              <div className="col-span-2 flex items-center mt-2">
+              {/* Terms */}
+              <div className="sm:col-span-2 flex items-center gap-2">
                 <input
                   type="checkbox"
-                  className="mr-2 text-blue-600 focus:ring-blue-500 rounded"
+                  name="agree"
+                  id="agree"
+                  className="rounded text-blue-600 focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">
+                <label htmlFor="agree" className="text-sm text-gray-700">
                   I agree to the Terms and Conditions
-                </span>
+                </label>
               </div>
 
-              <div className="col-span-2">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition">
+              {/* Submit Button */}
+              <div className="sm:col-span-2">
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white font-medium py-2.5 rounded-md hover:bg-blue-700 active:scale-[0.99] transition-transform"
+                >
                   Submit
                 </button>
               </div>

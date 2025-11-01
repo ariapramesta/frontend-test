@@ -79,7 +79,7 @@ export default function Home() {
                           {c.foundedYear || "N/A"}
                         </td>
                         <td className="p-3 text-gray-600">
-                          {c.headquarters || "N/A"}
+                          {c.country || "N/A"}
                         </td>
                       </tr>
                     ))}

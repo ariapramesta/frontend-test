@@ -57,8 +57,12 @@ export default function Home() {
                     <tr>
                       <th className="text-left p-3 font-medium">Name</th>
                       <th className="text-left p-3 font-medium">Industry</th>
-                      <th className="text-left p-3 font-medium">Founded</th>
-                      <th className="text-left p-3 font-medium">City</th>
+                      <th className="text-left p-3 font-medium">
+                        Founded Year
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        Headquarters City
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
